@@ -6,7 +6,9 @@ import InterestRate from './InterestRate.jsx';
 import LoanType from './LoanType.jsx';
 import DonutGraph from './DonutGraph.jsx';
 import AffordabilityTable from './AffordabilityTable.jsx';
+import NewSlider from './NewSlider.jsx';
 import Styled from './Styled.jsx';
+
 
 const { AffordabiltyContainer, Padding, Header, AffordabilityText, PaddingTwo, TextContainerBold, TextContainer, FlexContainer, GridContainer, GraphContainer } = Styled;
     // AffordabiltyContainer, Padding, Header, AffordabilityText, PaddingTwo, TextContainerBold, TextContainer, FlexContainer, GridContainer
@@ -30,7 +32,8 @@ class App extends React.Component {
       percent: 20,
       principalPercentage: 0,
       homeInsurancePercentage: 0,
-      propertyTaxPercentage: 0
+      propertyTaxPercentage: 0,
+      xCoordinate: 0
     };
     this.getHomePrice = this.getHomePrice.bind(this);
     this.calculateMonthlyPayment = this.calculateMonthlyPayment.bind(this);
@@ -40,9 +43,17 @@ class App extends React.Component {
     this.calculatePropertyTax = this.calculatePropertyTax.bind(this);
     this.calculatePrincipal = this.calculatePrincipal.bind(this);
     this.calculateETC = this.calculateETC.bind(this);
+    this.handleSlide = this.handleSlide.bind(this);
   }
 
+  handleSlide(event) {
+    console.log('x:', event.pageX);
+    console.log('EL:', Object.keys(event.target))
 
+    // this.setState({
+    //   xCoordinate: event.pageX
+    // });
+  }
 
   getHomePrice() {
     axios({
@@ -167,8 +178,10 @@ class App extends React.Component {
     target.style.border = "3px solid #007882"
     this.setState({
       previouslyClicked: target
-    })
+    });
   }
+
+
 
   render() {
     {this.state.max === null
@@ -208,6 +221,7 @@ class App extends React.Component {
           <DonutGraph  monthlyPayment={this.state.monthlyPayment} principalPercentage={this.state.principalPercentage}  propertyTaxPercentage={this.state.propertyTaxPercentage} homeInsurancePercentage={this.state.homeInsurancePercentage} mortgageETCPercentage={this.state.mortgageETCPercentage}/>
           <AffordabilityTable principal={this.state.principal} propertyTax={this.state.propertyTax} homeInsurance={this.state.homeInsurance} mortgageETC={this.state.mortgageETC} />
         </GraphContainer>
+        <NewSlider xCoordinate={this.state.xCoordinate} handleSlide={this.handleSlide} />
       </AffordabiltyContainer>
     );
   }

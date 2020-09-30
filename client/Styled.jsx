@@ -352,6 +352,7 @@ outline: none;
 position: absolute;
 width: 100%;
 height: 100%;
+padding-left: 6px;
 top: 0px;
 left: 0px;
 right: 0px;
